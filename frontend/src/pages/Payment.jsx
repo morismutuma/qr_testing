@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { motion, AnimatePresence } from 'framer-motion'
-import axios from 'axios'
+import api from '../services/api'
 import Header from '../components/Header'
 import UserDetailsForm from '../components/UserDetailsForm'
 import AmountSection from '../components/AmountSection'
@@ -21,7 +21,7 @@ const Payment = () => {
   const [createdSession, setCreatedSession] = useState(null)
 
   useEffect(() => {
-    axios.get('/api/settings/').then(res => setSettings(res.data))
+    api.get('/api/settings/').then(res => setSettings(res.data))
   }, [])
 
   const onSubmit = (data) => {
@@ -40,7 +40,7 @@ const Payment = () => {
       payment_method: paymentMethod
     }
 
-    axios.post('/api/payment-session/', payload)
+    api.post('/api/payment-session/', payload)
       .then(res => {
         if (paymentMethod === 'mpesa') {
           // If M-Pesa is chosen, open the interactive checkout UI

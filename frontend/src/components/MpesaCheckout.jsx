@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import axios from 'axios'
+import api from '../services/api'
 
 const MpesaCheckout = ({ session, onClose }) => {
   const [activeTab, setActiveTab] = useState('stk') // 'stk' or 'qr'
@@ -34,7 +34,7 @@ const MpesaCheckout = ({ session, onClose }) => {
         return
       }
 
-      axios.get(`/api/payment-session/${session.id}/status/`)
+      api.get(`/api/payment-session/${session.id}/status/`)
         .then(res => {
           const { status, mpesa_receipt_number, result_desc } = res.data
           if (status === 'completed') {
@@ -77,7 +77,7 @@ const MpesaCheckout = ({ session, onClose }) => {
     if (activeTab === 'qr' && !qrCode) {
       setQrLoading(true)
       setErrorDetails('')
-      axios.get(`/api/payment-session/${session.id}/qr-code/`)
+      api.get(`/api/payment-session/${session.id}/qr-code/`)
         .then(res => {
           if (res.data.qr_code) {
             setQrCode(res.data.qr_code)
@@ -101,7 +101,7 @@ const MpesaCheckout = ({ session, onClose }) => {
     setErrorDetails('')
     setStatusMessage('Sending payment request to Safaricom Daraja...')
 
-    axios.post(`/api/payment-session/${session.id}/stk-push/`, { phone })
+    api.post(`/api/payment-session/${session.id}/stk-push/`, { phone })
       .then(res => {
         setStkStatus('sent')
         setStatusMessage('Payment request sent! Please check your phone for the M-Pesa PIN prompt.')
@@ -116,7 +116,7 @@ const MpesaCheckout = ({ session, onClose }) => {
 
   // Simulate payment callback for offline development
   const handleSimulateSuccess = () => {
-    axios.post(`/api/payment-session/${session.id}/simulate-success/`)
+    api.post(`/api/payment-session/${session.id}/simulate-success/`)
       .then(res => {
         setPaymentStatus('completed')
         setReceipt(res.data.mpesa_receipt_number || 'MOCK_SUCCESS')
