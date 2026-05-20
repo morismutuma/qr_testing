@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production'
 
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-allowed_hosts_raw = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1')
+allowed_hosts_raw = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,.onrender.com')
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_raw.split(',') if host.strip()]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -105,7 +105,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-cors_origins_raw = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173,http://localhost:5176,http://127.0.0.1:5176')
+cors_origins_raw = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173,http://localhost:5176,http://127.0.0.1:5176,.onrender.com')
 CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins_raw.split(',') if origin.strip()]
 
 # Safaricom Daraja API Settings
@@ -114,7 +114,7 @@ DARAJA_CONSUMER_KEY = os.environ.get('DARAJA_CONSUMER_KEY', '')
 DARAJA_CONSUMER_SECRET = os.environ.get('DARAJA_CONSUMER_SECRET', '')
 DARAJA_BUSINESS_SHORTCODE = os.environ.get('DARAJA_BUSINESS_SHORTCODE', '174379')
 DARAJA_PASSKEY = os.environ.get('DARAJA_PASSKEY', 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919')
-DARAJA_CALLBACK_URL = os.environ.get('DARAJA_CALLBACK_URL', 'https://realedgeventure.com/api/payments/mpesa/callback/')
+DARAJA_CALLBACK_URL = os.environ.get('DARAJA_CALLBACK_URL', 'https://qr-testing-qgk0.onrender.com/api/payments/mpesa/callback/')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
